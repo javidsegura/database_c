@@ -10,6 +10,7 @@
 
 // Importing user-defined headers (homepage and add)
 #include "add.h"
+#include "interface.h"
 
 
 
@@ -17,6 +18,10 @@
 #define MAX_COLUMNS 100
 #define MAX_ROWS 1000
 #define MAX_STRING_LENGTH 100
+
+
+// Declaring functions from other headers
+void end_request();
 
 // 0. SET UP
 char path[] = "/Users/javierdominguezsegura/Programming/No Python/C/Programming principles/Database Management System/data/MUSIC - DATASET - Sheet1 (1) (1).csv";
@@ -125,12 +130,20 @@ void complete_db_read() { // FINISHED
 
     printf("\nTotal records: %d\n", db.num_records);
     printf(" - ");
+
+    end_request();
+
+
+
+
+
+
 }
 
-// READ SUBSCRIPTING
+// 4. READ SUBSCRIPTING
 
 
-void subscripts_rows_read(){
+void subscripts_record_read(){
 
     system("clear");
 
@@ -142,8 +155,10 @@ void subscripts_rows_read(){
     scanf("%d", &user_decision_index);
 
     if (user_decision_index > db.num_records - 1){
-        printf("You have selected an empty record. Please try again.");
-        subscripts_rows_read();
+        system("clear");
+        printf("ERROR: You have selected an empty record. Please try again.");
+        sleep(2);
+        subscripts_record_read();
     }
     else{
 
@@ -167,8 +182,62 @@ void subscripts_rows_read(){
 
     }
 
+    end_request();
 
 
+
+
+}
+
+void subscripts_column_read(){
+
+
+    /*
+    
+    
+    HOW TO GET USER STRING INPUT
+    
+    */
+
+    system("clear");
+
+    int user_decision_col;
+
+
+    printf("Columns of the database: \n"); 
+    printf("---------------------\n");
+    for (int i = 0; i < db.num_columns; i++){
+        printf("%s", db.column_names[i]);
+        if (i != db.num_columns - 1){
+            printf(",");
+        }
+    }
+
+    printf("\n\n(*) Select index of column: ");
+    printf("\n\n==> ");
+    scanf("%d", &user_decision_col);
+
+    if (user_decision_col > db.num_columns - 1){
+        system("clear");
+        printf("ERROR: You have selected a column that does not exist. Please try again.\n\n");
+        sleep(2);
+        subscripts_column_read();
+    }
+    else{
+
+    system("clear");
+
+    printf("%s", db.column_names[user_decision_col]); 
+    printf("\n---------------------");
+
+    for (int i = 0; i < db.num_records; i++){
+
+        printf("\n%s", db.records[i][user_decision_col]);
+
+    }
+    }
+    
+    end_request();
 
 
 

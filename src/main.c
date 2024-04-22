@@ -11,10 +11,9 @@ void record_add();
 
 int main(){
 
+        while (1){
         homepage();
-
-
-
+        }
 
         return 0;
 }
@@ -42,11 +41,10 @@ void homepage(){
             complete_db_read();
     }
     else if (strcmp(user_decision_homepage, "1.2") == 0){
-            //function call to read the database by columns
-            printf("We are currently working on it. Please try again later.\n");
+            subscripts_column_read();
     }
     else if (strcmp(user_decision_homepage, "1.3") == 0){
-            subscripts_rows_read();
+            subscripts_record_read();
     }
     else if (strcmp(user_decision_homepage, "2.1") == 0){
             record_add();
@@ -61,7 +59,6 @@ void homepage(){
             sleep(2);
             homepage();
     }
-    
 
         
 
