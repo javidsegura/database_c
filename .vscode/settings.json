@@ -1,0 +1,7 @@
+{
+      "files.associations": {
+            "add.h": "c",
+            "homepage.h": "c",
+            "unistd.h": "c"
+      }
+}

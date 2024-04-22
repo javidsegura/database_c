@@ -12,6 +12,7 @@
 #include "add.h"
 
 
+
 // Macros to define the maximum number of columns, rows and string length
 #define MAX_COLUMNS 100
 #define MAX_ROWS 1000
@@ -26,13 +27,13 @@ typedef struct {
 
     // Dimensions
     int num_columns; 
-    int num_rows;
+    int num_records;
 
     // Headers
     char column_names[MAX_COLUMNS][MAX_STRING_LENGTH]; 
 
     // Records
-    char data[MAX_ROWS][MAX_COLUMNS][MAX_STRING_LENGTH];
+    char records[MAX_ROWS][MAX_COLUMNS][MAX_STRING_LENGTH];
 
 } Database;
 
@@ -73,16 +74,16 @@ void load_csv(char* path) {
     }
 
     // Read data rows
-    db.num_rows = 0;
+    db.num_records = 0;
     while (fgets(header, MAX_STRING_LENGTH, fp) != NULL) {
 
         token = strtok(header, ",");
         for (int i = 0; i < db.num_columns; i++) {
-            strncpy(db.data[db.num_rows][i], token, MAX_STRING_LENGTH - 1); // First dimension is row, second dimension is column
+            strncpy(db.records[db.num_records][i], token, MAX_STRING_LENGTH - 1); // First dimension is row, second dimension is column
             token = strtok(NULL, ","); // Move to the next token
         }
 
-        db.num_rows++;
+        db.num_records++;
     }
 
     fclose(fp);
@@ -102,8 +103,6 @@ void complete_db_read() { // FINISHED
 
     system("clear");
 
-    load_csv(path);      
-
     // Header 
     printf("----------------\n");
     for (int i = 0; i < db.num_columns; i++) {
@@ -115,18 +114,66 @@ void complete_db_read() { // FINISHED
     printf("---------------\n\n");
 
     // Records
-    for (int i = 0; i < db.num_rows; i++) {
+    for (int i = 0; i < db.num_records; i++) {
         for (int j = 0; j < db.num_columns; j++) {
-            printf("%s", db.data[i][j]);
+            printf("%s", db.records[i][j]);
             if (j < db.num_columns - 1) {
                 printf(",");
             }
         }
     }
 
-    printf("\nTotal records: %d\n", db.num_rows);
+    printf("\nTotal records: %d\n", db.num_records);
     printf(" - ");
 }
+
+// READ SUBSCRIPTING
+
+
+void subscripts_rows_read(){
+
+    system("clear");
+
+    int user_decision_index;
+
+    printf("\n\n(*) Provide the index of the record: ");
+    printf("\n Note: the dataset has %d records ",  db.num_records - 1);
+    printf("\n==> ");
+    scanf("%d", &user_decision_index);
+
+    if (user_decision_index > db.num_records - 1){
+        printf("You have selected an empty record. Please try again.");
+        subscripts_rows_read();
+    }
+    else{
+
+    printf("----------------\n");
+    for (int i = 0; i < db.num_columns; i++) {
+        printf("%s", db.column_names[i]);
+        if (i < db.num_columns - 1) { // Print a comma separator if it is not the last element in the row
+            printf(" , ");
+        }
+    }
+    printf("---------------\n\n");
+
+    for (int i = 0; i < db.num_columns; i++){
+        printf("%s", db.records[user_decision_index][i]);
+        if (i < db.num_columns - 1) {
+                printf(",");
+            }
+    }
+
+    printf("\n---------------\n\n");
+
+    }
+
+
+
+
+
+
+}
+
 
 
 

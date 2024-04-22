@@ -10,12 +10,18 @@ void record_add();
  
 
 int main(){
-      homepage();
 
-      return 0;
+        homepage();
+
+
+
+
+        return 0;
 }
 
 void homepage(){
+
+    load_csv(path);
       
     system("clear");
     printf("\n\n|-> READ MODE\n");
@@ -40,8 +46,7 @@ void homepage(){
             printf("We are currently working on it. Please try again later.\n");
     }
     else if (strcmp(user_decision_homepage, "1.3") == 0){
-            //function call to read the database by rows
-            printf("We are currently working on it. Please try again later.\n");
+            subscripts_rows_read();
     }
     else if (strcmp(user_decision_homepage, "2.1") == 0){
             record_add();
