@@ -108,33 +108,39 @@ void complete_db_read() { // FINISHED
 
     system("clear");
 
+    header_element();
+
     // Header 
-    printf("----------------\n");
+    
+    printf("\n\n\n");
+    printf("-----------------------------------------------------------------\n");
     for (int i = 0; i < db.num_columns; i++) {
         printf("%s", db.column_names[i]);
         if (i < db.num_columns - 1) { // Print a comma separator if it is not the last element in the row
             printf(" , ");
         }
     }
-    printf("---------------\n\n");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
 
     // Records
     for (int i = 0; i < db.num_records; i++) {
+        printf("\n");
         for (int j = 0; j < db.num_columns; j++) {
             printf("%s", db.records[i][j]);
             if (j < db.num_columns - 1) {
-                printf(",");
+                printf(", ");
             }
         }
     }
+    
+    printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+    printf("\n\nTotal records: %d\n", db.num_records);
+    printf("-----------------------------------------------------------------");
 
-    printf("\nTotal records: %d\n", db.num_records);
-    printf(" - ");
+    
+
 
     end_request();
-
-
-
 
 
 
@@ -145,7 +151,17 @@ void complete_db_read() { // FINISHED
 
 void subscripts_record_read(){
 
+    /*
+    
+
+    Description: this function reads a record for a selected index 
+    
+    
+    */
+
     system("clear");
+
+    header_element();
 
     int user_decision_index;
 
@@ -195,11 +211,13 @@ void subscripts_column_read(){
     /*
     
     
-    HOW TO GET USER STRING INPUT
+    Description: this functions prints a column for a selected index
     
     */
 
     system("clear");
+
+    header_element();
 
     int user_decision_col;
 
@@ -226,6 +244,7 @@ void subscripts_column_read(){
     else{
 
     system("clear");
+    header_element();
 
     printf("%s", db.column_names[user_decision_col]); 
     printf("\n---------------------");

@@ -16,8 +16,8 @@ void end_request(){
 
       int user_decision;
 
-      printf("\n\n\n\n------------------------------------\n");
-      printf("Return to homepage (0) or exit program (1): \n");
+      printf("\n\n\n\n - - - - - - - - - - - - - - - - -\n");
+      printf("(*) Return to homepage (0) or exit program (1): \n");
       printf("==> ");
       scanf("%d", &user_decision);
 
@@ -41,7 +41,23 @@ void end_request(){
       
 }
 
+void header_element(){
 
+
+      printf("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    printf("\n\n");
+    printf("\t\t\t\t\t\t\t\t\t\tDATABASE MANAGEMENT SYSTEM");
+    time_t rawtime;
+    struct tm * timeinfo;
+
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+    printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t    Session info: %s", asctime (timeinfo)); 
+    printf("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+
+
+}
 
 
 

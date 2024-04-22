@@ -1,5 +1,7 @@
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
+#include <time.h>
 #include "headers/funcs.h"
 
 
@@ -7,6 +9,7 @@
 void homepage();
 void complete_db_read();
 void record_add();
+void header_element();
  
 
 int main(){
@@ -23,6 +26,9 @@ void homepage(){
     load_csv(path);
       
     system("clear");
+
+    header_element();
+
     printf("\n\n|-> READ MODE\n");
     printf("      |--> Read full database (1.1)\n");
     printf("      |--> Read by columns (1.2)\n");
@@ -34,6 +40,7 @@ void homepage(){
 
     char user_decision_homepage[99];   
 
+    printf("\n\n\n(*) Select an option here: ");
     printf("\n==> ");
     scanf("%s", user_decision_homepage);
 

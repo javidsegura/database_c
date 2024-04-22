@@ -1,9 +1,13 @@
+#ifndef ADD_H
+#define ADD_H
+
 // 0. SET UP
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include "interface.h"
 
 
 // Will have to redine the path here (with a different name)
@@ -27,6 +31,7 @@ void user_decision_add(records *sample_data);
 void save_csv_add(records *sample_data);
 void create_instance_add();
 void confirm_update_add(records *sample_data);
+void header_element();
 
 void record_add(){
 
@@ -60,6 +65,8 @@ void user_decision_add(records *sample_data){
       */
 
      system("clear");
+
+     header_element();
 
      char user_decision_duration[99];
 
@@ -163,3 +170,5 @@ void save_csv_add(records *sample_data){
       printf("\n\nData has been saved succesfully.\n\n");
 
 }
+
+#endif
