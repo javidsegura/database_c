@@ -25,7 +25,7 @@ void homepage(){
 
     load_csv(path);
       
-    // system("clear");
+    system("clear");
 
     header_element();
 

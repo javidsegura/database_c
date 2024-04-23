@@ -64,32 +64,35 @@ void user_decision_add(records *sample_data){
       
       */
 
-     system("clear");
+      system("clear");
 
-     header_element();
+      header_element();
 
-     char user_decision_duration[99];
+      char buffer[256];
 
+      printf("\nTitle {str}: ");
+      scanf(" %[^\n]", buffer);  // Reads entire line until newline is encountered - (REGEX)
+      strcpy(sample_data->title, buffer);
 
-     printf("\nTitle {str}: ");
-     scanf("%s", sample_data->title);
+      printf("Author {str}: ");
+      scanf(" %[^\n]", buffer);
+      strcpy(sample_data->author, buffer);
 
-     printf("Author {str}: ");
-     scanf("%s", sample_data->author);
+      printf("Duration {str} (MM:SS): ");
+      scanf(" %[^\n]", buffer);
+      strcpy(sample_data->duration, buffer);
 
-     printf("Duration {str} (MM:SS): ");
-     scanf("%s", sample_data->duration);
+      printf("Genre {str}: ");
+      scanf(" %[^\n]", buffer);
+      strcpy(sample_data->genre, buffer);
 
-     printf("Genre {str}: ");
-     scanf("%s", sample_data->genre);
+      printf("Year {int}: ");
+      scanf("%d", &sample_data->year);
 
-     printf("Year {int}: ");
-     scanf("%d", &sample_data->year);
+      printf("Views {long int}: ");
+      scanf("%ld", &sample_data->views);
 
-     printf("Views {long int}: ");
-     scanf("%ld", &sample_data->views);
-
-     confirm_update_add(sample_data);
+      confirm_update_add(sample_data);
 }
 
 void confirm_update_add(records *sample_data){
