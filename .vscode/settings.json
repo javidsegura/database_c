@@ -2,6 +2,7 @@
       "files.associations": {
             "add.h": "c",
             "homepage.h": "c",
-            "unistd.h": "c"
+            "unistd.h": "c",
+            "funcs.h": "c"
       }
 }
