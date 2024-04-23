@@ -1,6 +1,7 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
+#include "funcs.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,13 +9,11 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "funcs.h"
 
-void partial_db_read();
+void partial_db_read(int mode);
 void complete_db_read();
 void record_prior_next_read(int user_record, int direction);
-
-
+void header_element();
 
 
 
@@ -39,7 +38,9 @@ void end_request(int mode){
             printf("\n\n Goodbye!");
             exit(0);
       default:
-            printf("Your option has not been registered. Please, try again.");
+            system("clear");
+            printf("Your option has not been registered. Please, try again.\n");
+            fflush(stdout);  // Flush the output buffer to make sure the message appears before sleep
             end_request(0);
             break;
       }
@@ -62,11 +63,16 @@ void end_request(int mode){
                   printf("\n\n Goodbye!");
                   exit(0);
             case 2:
-                  partial_db_read();
+                  system("clear");
+                  header_element();
+                  partial_db_read(1);
                   break;
             default:
-                  printf("Your option has not been registered. Please, try again.");
-                  end_request(1);
+                  system("clear");
+                  printf("Your option has not been registered. Please, try again.\n");
+                  fflush(stdout);  // Flush the output buffer to make sure the message appears before sleep
+                  sleep(2);
+                  complete_db_read();
                   break;
             }
       }
@@ -90,8 +96,11 @@ void end_request(int mode){
                   complete_db_read();
                   break;
             default:
+                  system("clear");
                   printf("Your option has not been registered. Please, try again.");
-                  end_request(2);
+                  fflush(stdout);
+                  sleep(2);
+                  partial_db_read(1);
                   break;
             }
       }
@@ -122,7 +131,10 @@ void end_request_prior_record(int current_record_index){
             record_prior_next_read(current_record_index, 1);
 
       default:
-            printf("Your option has not been registered. Please, try again.");
+            system("clear");
+            printf("Your option has not been registered. Please, try again.\n");
+            fflush(stdout);
+            sleep(2);
             end_request_prior_record(current_record_index);
             break;
       }
@@ -149,7 +161,6 @@ void header_element(){
 
 
 }
-
 
 
 

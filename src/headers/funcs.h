@@ -115,8 +115,8 @@ void complete_db_read() { // FINISHED
 
     // Header 
     
-    printf("\n\n\n");
-    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
+    printf("\n\n\n DATABASE DATA:");
+    printf("\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
     for (int i = 0; i < db.num_columns; i++) {
         if (i == 0){
             printf("    %s", db.column_names[i]);
@@ -149,7 +149,7 @@ void complete_db_read() { // FINISHED
     }
     
     printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
-    printf("\n\nTotal records: %d\n", db.num_records);
+    printf("\n\nTotal records in the database: %d\n", db.num_records);
     printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
 
     
@@ -159,7 +159,7 @@ void complete_db_read() { // FINISHED
 
 }
 
-void partial_db_read() { // FINISHED
+void partial_db_read(int mode) { // FINISHED
 
 
     /*
@@ -168,14 +168,10 @@ void partial_db_read() { // FINISHED
 
     */
 
-    system("clear");
-
-    header_element();
-
     // Header 
     
-    printf("\n\n\n");
-    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
+    printf("\n\n\n DATABASE DATA (REDUCED):");
+    printf("\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
     for (int i = 0; i < db.num_columns; i++) {
         if (i == 0){
             printf("    %s", db.column_names[i]);
@@ -206,21 +202,31 @@ void partial_db_read() { // FINISHED
            
         }
     }
-    
+    if (mode == 1){
     printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
     printf("\n\nTotal records: %d\n", 5);
     printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
-
-    
-
     printf("\n");
     end_request(2);
+    }
+    else if (mode == 2){
+        printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+        printf("\n\nTotal records in the database: %d\n", db.num_records);
+        printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
+
+    }
+    else{
+        printf("You have selected a mode that does not exist.");
+        sleep(2);
+       
+    }
+    
 
 }
 
 
 
-// 4. READ SUBSCRIPTING
+// 4. READ SUBSCRIPTING (ROWS AND COLUMNS)
 
 
 void subscripts_record_read(){
@@ -239,9 +245,10 @@ void subscripts_record_read(){
 
     int user_decision_index;
 
-    printf("\n\n(*) Provide the index of the record: ");
-    printf("\n Note: the dataset has %d records ",  db.num_records - 1);
-    printf("\n==> ");
+    partial_db_read(2);
+
+    printf("\n\n\n(*) Provide index of record: \n");
+    printf("==> ");
     scanf("%d", &user_decision_index);
 
     if (user_decision_index > db.num_records - 1){
@@ -252,23 +259,36 @@ void subscripts_record_read(){
     }
     else{
 
-    printf("----------------\n");
+    system("clear");
+
+    printf("\n\n\n DATABASE DATA (record: %d):", user_decision_index);
+    printf("\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
     for (int i = 0; i < db.num_columns; i++) {
+        if (i == 0){
+            printf("\t%s", db.column_names[i]);
+        }
+        else{
         printf("%s", db.column_names[i]);
+        }
         if (i < db.num_columns - 1) { // Print a comma separator if it is not the last element in the row
             printf(" , ");
         }
     }
-    printf("---------------\n\n");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
 
     for (int i = 0; i < db.num_columns; i++){
+        if (i == 0){
+            printf("\t%s", db.records[user_decision_index][i]);
+        }
+        else{
         printf("%s", db.records[user_decision_index][i]);
+        }
         if (i < db.num_columns - 1) {
-                printf(",");
+                printf(", ");
             }
     }
 
-    printf("\n---------------\n\n");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
 
     }
 
@@ -287,6 +307,7 @@ void record_prior_next_read(int current_record, int direction){
 
     header_element();
 
+
     int adjusted_record = current_record + direction;
 
     if (adjusted_record > db.num_records - 1 || adjusted_record < 0){  // XXX => IS NOT WORKING
@@ -295,23 +316,36 @@ void record_prior_next_read(int current_record, int direction){
     }
     else{
 
-    printf("----------------\n");
+    printf("\n\n\n DATABASE DATA (record: %d):", current_record + 1);
+    printf("\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
     for (int i = 0; i < db.num_columns; i++) {
+        if (i == 0){
+            printf("\t%s", db.column_names[i]);
+        }
+        else{
         printf("%s", db.column_names[i]);
+        }
         if (i < db.num_columns - 1) { // Print a comma separator if it is not the last element in the row
             printf(" , ");
         }
     }
-    printf("---------------\n\n");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
 
     for (int i = 0; i < db.num_columns; i++){
-        printf("%s", db.records[adjusted_record][i]);  // ADD FORMATTING HERE (INDECES)
+        if (i == 0){
+            printf("\t%s", db.records[adjusted_record][i]);
+        }
+        else{
+        printf("%s", db.records[adjusted_record][i]);
+        }
         if (i < db.num_columns - 1) {
-                printf(",");
+                printf(", ");
             }
     }
 
-    printf("\n---------------\n\n");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
+
+
 
     }
 
@@ -334,20 +368,24 @@ void subscripts_column_read(){
 
     header_element();
 
-    int user_decision_col;
+    unsigned int user_decision_col; // Important for the input to be unsigned
 
-
-    printf("Columns of the database: \n"); 
-    printf("---------------------\n");
+    printf("\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n");
     for (int i = 0; i < db.num_columns; i++){
+        if (i == 0){
+            printf("\t%s", db.column_names[i]);
+        }
+        else {
         printf("%s", db.column_names[i]);
+        }
         if (i != db.num_columns - 1){
-            printf(",");
+            printf(", ");
         }
     }
+     printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
 
-    printf("\n\n(*) Select index of column: ");
-    printf("\n\n==> ");
+    printf("\n\n(*) Select index of column:\n ");
+    printf("==> ");
     scanf("%d", &user_decision_col);
 
     if (user_decision_col > db.num_columns - 1){
@@ -361,15 +399,23 @@ void subscripts_column_read(){
     system("clear");
     header_element();
 
-    printf("%s", db.column_names[user_decision_col]); 
-    printf("\n---------------------");
+    printf("\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n");
+    printf("\t   %s", db.column_names[user_decision_col]); 
+    printf("\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n");
+
 
     for (int i = 0; i < db.num_records; i++){
-
-        printf("\n%s", db.records[i][user_decision_col]);
+ 
+        printf("\n\t|%d| %s\n", i,db.records[i][user_decision_col]);
+    
 
     }
     }
+
+    printf("\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+    printf("\n\nTotal records: %d\n", db.num_records);
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+
     
     end_request(0);
 
