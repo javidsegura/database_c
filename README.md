@@ -14,8 +14,6 @@ To Do:
 - Add correct homepage
 - Edit a record 
 
-<hr>
-
 ## SCREENSHOTS
 
 ![image (12)](https://github.com/javidsegura/database_c/assets/129964070/8c39c3fe-971c-4635-9a04-7223cd588bc2)
