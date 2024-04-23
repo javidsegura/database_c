@@ -77,7 +77,7 @@ void user_decision_add(records *sample_data){
      printf("Author {str}: ");
      scanf("%s", sample_data->author);
 
-     printf("Duration-(MM:SS) {int}: "); // Can be optimized to a single tokenized input
+     printf("Duration {str} (MM:SS): ");
      scanf("%s", sample_data->duration);
 
      printf("Genre {str}: ");
@@ -100,9 +100,14 @@ void confirm_update_add(records *sample_data){
       
       */
 
+
+
       system("clear");
 
-      char user_decision[30];
+      char *ptr;
+
+      ptr = (char *)malloc(1);
+
 
       printf("(*) Do you want to save the following data (y/n) ?\n\n");
       printf("---------------------------\n\n");
@@ -118,15 +123,23 @@ void confirm_update_add(records *sample_data){
 
 
       printf("\n==> ");
-      scanf("%s", user_decision);
+      scanf("%c", ptr);
       
 
-      if (strcmp(user_decision, "y") == 0) {
-        save_csv_add(sample_data);
+      switch (*ptr)
+      {
+      case 'y':
+            save_csv_add(sample_data);
+            break;
+      case 'n':
+            printf("\n\nData has not been saved.\n\n");
+      default:
+            printf("\n\n Your option has not been registered. Please, try again.\n\n");
+            confirm_update_add(sample_data);
+            break;
       }
-      else {
-        printf("\n\nData has not been saved.\n\n");
-      }
+
+      free(ptr);
 
 }
 
@@ -153,7 +166,7 @@ void save_csv_add(records *sample_data){
       }
 
 
-
+      fputc('\n', file);
       fprintf(file, "%s,", sample_data->title);       
       fprintf(file, "%s,", sample_data->author);
       fprintf(file, "%s,", sample_data->duration);  
@@ -168,6 +181,7 @@ void save_csv_add(records *sample_data){
 
       system("clear");
       printf("\n\nData has been saved succesfully.\n\n");
+      end_request(0);
 
 }
 

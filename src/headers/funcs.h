@@ -21,7 +21,10 @@
 
 
 // Declaring functions from other headers
-void end_request();
+void end_request(int x);
+void record_prior_next_read(int user_record, int direction);
+void end_request_prior_record(int current_record_index);
+
 
 // 0. SET UP
 char path[] = "/Users/javierdominguezsegura/Programming/No Python/C/Programming principles/Database Management System/data/MUSIC - DATASET - Sheet1 (1) (1).csv";
@@ -113,38 +116,109 @@ void complete_db_read() { // FINISHED
     // Header 
     
     printf("\n\n\n");
-    printf("-----------------------------------------------------------------\n");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
     for (int i = 0; i < db.num_columns; i++) {
+        if (i == 0){
+            printf("    %s", db.column_names[i]);
+        }
+        else{
         printf("%s", db.column_names[i]);
+        }
         if (i < db.num_columns - 1) { // Print a comma separator if it is not the last element in the row
             printf(" , ");
         }
     }
-    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
 
     // Records
     for (int i = 0; i < db.num_records; i++) {
         printf("\n");
         for (int j = 0; j < db.num_columns; j++) {
+            if (j == 0){
+                printf("|%d| %s",i, db.records[i][j]);
+            }
+            else{
             printf("%s", db.records[i][j]);
+            }
+
             if (j < db.num_columns - 1) {
                 printf(", ");
             }
+           
         }
     }
     
-    printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+    printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
     printf("\n\nTotal records: %d\n", db.num_records);
-    printf("-----------------------------------------------------------------");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
 
     
 
 
-    end_request();
-
-
+    end_request(1);
 
 }
+
+void partial_db_read() { // FINISHED
+
+
+    /*
+
+    Description: this function reads the entire database and prints it to the console.
+
+    */
+
+    system("clear");
+
+    header_element();
+
+    // Header 
+    
+    printf("\n\n\n");
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
+    for (int i = 0; i < db.num_columns; i++) {
+        if (i == 0){
+            printf("    %s", db.column_names[i]);
+        }
+        else{
+        printf("%s", db.column_names[i]);
+        }
+        if (i < db.num_columns - 1) { // Print a comma separator if it is not the last element in the row
+            printf(" , ");
+        }
+    }
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
+
+    // Records
+    for (int i = 0; i < 5; i++) {
+        printf("\n");
+        for (int j = 0; j < db.num_columns; j++) {
+            if (j == 0){
+                printf("|%d| %s",i, db.records[i][j]);
+            }
+            else{
+            printf("%s", db.records[i][j]);
+            }
+
+            if (j < db.num_columns - 1) {
+                printf(", ");
+            }
+           
+        }
+    }
+    
+    printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+    printf("\n\nTotal records: %d\n", 5);
+    printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
+
+    
+
+    printf("\n");
+    end_request(2);
+
+}
+
+
 
 // 4. READ SUBSCRIPTING
 
@@ -198,9 +272,50 @@ void subscripts_record_read(){
 
     }
 
-    end_request();
+
+    end_request_prior_record(user_decision_index);
 
 
+
+
+}
+
+void record_prior_next_read(int current_record, int direction){
+
+    
+    system("clear");
+
+    header_element();
+
+    int adjusted_record = current_record + direction;
+
+    if (adjusted_record > db.num_records - 1 || adjusted_record < 0){  // XXX => IS NOT WORKING
+        printf("\nERROR: You have selected an empty record. Please try again.\n\n\n");
+        subscripts_record_read();
+    }
+    else{
+
+    printf("----------------\n");
+    for (int i = 0; i < db.num_columns; i++) {
+        printf("%s", db.column_names[i]);
+        if (i < db.num_columns - 1) { // Print a comma separator if it is not the last element in the row
+            printf(" , ");
+        }
+    }
+    printf("---------------\n\n");
+
+    for (int i = 0; i < db.num_columns; i++){
+        printf("%s", db.records[adjusted_record][i]);  // ADD FORMATTING HERE (INDECES)
+        if (i < db.num_columns - 1) {
+                printf(",");
+            }
+    }
+
+    printf("\n---------------\n\n");
+
+    }
+
+    end_request_prior_record(adjusted_record);
 
 
 }
@@ -256,7 +371,7 @@ void subscripts_column_read(){
     }
     }
     
-    end_request();
+    end_request(0);
 
 
 
