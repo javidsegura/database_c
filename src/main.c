@@ -1,15 +1,19 @@
+// Importing standard libraries' headers
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
+
+// Importing user-defined headers
 #include "headers/funcs.h"
 
-
-// Function declarations
+//Function prototype from local functions
 void homepage();
+
+//Functions prototypes from other headers 
 void complete_db_read();
 void record_add();
-void header_element();
+void ui_header_element();
  
 
 int main(){
@@ -21,13 +25,20 @@ int main(){
         return 0;
 }
 
+
+
 void homepage(){
+
+    /*
+    
+    Description: this function presents the user with a menu with all features of the program. Features are accessed by providing the corresponding number to that feature.
+    
+    */
 
     load_csv(path);
       
     system("clear");
-
-    header_element();
+    ui_header_element();
 
     printf("\n\n|-> READ MODE\n");
     printf("      |--> Read full database (1.1)\n");
@@ -58,17 +69,15 @@ void homepage(){
   
     }
     else if (strcmp(user_decision_homepage, "2.2") == 0){
-            //function call to edit an existing row in the database
             printf("We are currently working on it. Please try again later.\n");
+            fflush(stdout);
+            sleep(2);
     }
     else{
-            printf("Invalid input. Please try again.\n");
+            printf("ERROR: Invalid input. Please try again.\n");
             sleep(2);
             homepage();
     }
-
-        
-
 }
 
 
