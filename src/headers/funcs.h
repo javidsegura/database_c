@@ -324,6 +324,7 @@ void record_prior_next_read(int current_record, int direction){
     }
 
     end_request_prior_record(adjusted_record);
+    //Code developed by Javi DS and Anze Zgnoc
 }
 
 

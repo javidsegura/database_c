@@ -91,6 +91,7 @@ void end_request(int mode){
                   sleep(2);
                   complete_db_read();
                   break;
+                  //Code developed by Javi DS and Anze Zgnoc
             }
       }
       else if (mode == 2){
